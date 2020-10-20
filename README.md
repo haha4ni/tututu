@@ -9,3 +9,8 @@
 本篇為索引目錄
 
 教學會分三個部分平行進行，分別為Design Parttern、SDL個別教學以及遊戲開發教學。搭配遊戲開發進度來給予SDL教學以及少量的Design Parttern
+S系列：SDL教學
+G系列：遊戲開發
+D系列：Design Parttern
+
+![GitHub](https://github.com/haha4ni/tututu/blob/main/05.PNG?raw=true)
