@@ -1,0 +1,165 @@
+# 2 - 處理事件
+上一篇中講完如何建立一個視窗與著色，細心的你會發現到為什麼視窗跟個喜憨兒一樣癡呆不能動  
+這時我們就要給視窗顆腦袋讓他可以處理各種外部訊號，這篇只會寫出最簡單的視窗右上角的關閉視窗按鈕
+剩下的各種外部控制，像是滑鼠、鍵盤之類的會在後續文章出現
+
+
+## 
+我把前一篇的碼整理了一下，並拆成Init()、Draw()與Quit()三部分，同學們自行滲透
+```C++
+    /* 視窗與渲染器初始化 */
+    if (Init() == 0)
+```
+
+前一篇中視窗什麼事都不能做，兩秒後就會結束程式
+我們要把延遲兩秒這行做替換，讓程式不要馬上結束掉
+因此需要一個while去做輪詢(polling)處理
+直到我們按下視窗右上的X，當quit變為True時程式結束
+```C++
+bool quit = false;
+```
+```C++
+    /* 事件處理 */
+    while (!quit)
+    {
+```
+
+我們每次回圈的時候都會去取得是否有新的事件近來，如果有則會回傳0
+只要還有事件未處理這段碼都會把全部事件處理完才會接著做後面動作
+```C++
+        while (SDL_PollEvent(&event) != 0)
+        {
+            /* 想要處理的事件 */
+            switch (event.type)
+            {
+            /* 視窗關閉 */
+            case SDL_QUIT:
+                quit = true;
+                break;
+            }
+        }
+```
+每輪迴圈都要更新畫面
+```C++
+        /* 畫面繪製 */
+        Draw();
+    }
+```
+
+最後別忘了釋放記憶體
+```C++
+    /* 釋放記憶體並離開 */
+    Quit();
+```
+## 原始碼
+```C++
+#include <iostream>
+#include "SDL.h"
+
+using namespace std;
+
+SDL_Window* window;
+SDL_Renderer* renderer;
+
+SDL_Event event;
+bool quit = false;
+
+int Init()
+{
+    /* SDL初始化 */
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        cout << "SDL初始化失敗：" << SDL_GetError() << endl;
+        return 0;
+    }
+    /* 建立視窗 */
+    window = SDL_CreateWindow(
+                            "SDL Tutorial",                 // 視窗標題
+                            SDL_WINDOWPOS_UNDEFINED,        // 默認視窗起始X位置
+                            SDL_WINDOWPOS_UNDEFINED,        // 默認視窗起始Y位置
+                            640, 480,                       // 視窗寬高
+                            SDL_WINDOW_SHOWN);              // 顯示視窗
+    if (window == NULL)
+    {
+        printf("建立視窗失敗: %s\n", SDL_GetError());
+        return 0;
+    }
+    /* 建立視窗的渲染器 */
+    renderer = SDL_CreateRenderer(
+                                window,                     // 指定渲染的視窗
+                                -1,                         // 視窗的索引號，一般設定-1
+                                SDL_RENDERER_ACCELERATED);  // 渲染使用硬體加速
+    /* 渲染器設定底色 */
+    SDL_SetRenderDrawColor(renderer, 0x66, 0x66, 0x66, 0xFF);
+
+    return 1;
+}
+
+void Draw()
+{
+    /* 將整個畫面清成我們設定的顏色 */
+    SDL_RenderClear(renderer);
+    /* 在呼叫此函式之前，所有內容都藏在幕後，呼叫之後才會顯示在視窗上 */
+    SDL_RenderPresent(renderer);
+}
+
+void Quit()
+{
+    /* 關閉視窗 */
+    SDL_DestroyWindow(window);
+    /* 離開SDL */
+    SDL_Quit();
+}
+
+
+int main(int argc, char* args[])
+{
+    /* 視窗與渲染器初始化 */
+    if (Init() == 0)
+        return 0;
+
+    /* 事件處理 */
+    while (!quit)
+    {
+        while (SDL_PollEvent(&event) != 0)
+        {
+            /* 想要處理的事件 */
+            switch (event.type)
+            {
+            /* 視窗關閉 */
+            case SDL_QUIT:
+                quit = true;
+                break;
+            }
+        }
+
+        /* 畫面繪製 */
+        Draw();
+    }
+
+    /* 釋放記憶體並離開 */
+    Quit();
+
+    return 1;
+}
+```
+
+## 本章API
+#### SDL_Init[\*](https://wiki.libsdl.org/SDL_Init)
+在呼叫SDL大部分的函式前，都必須先使用此函式初始化才可使用
+```
+int SDL_Init(Uint32 flags)
+```
+##### Uint32 flag
+設定需要初始化的子系統，如果用到的系統沒初始化到可能會造成程式當機
+
+|  參數   | 說明  |
+|  ----  | ----  |
+| SDL_INIT_TIMER | 初始化計時器子系統 |
+| SDL_INIT_AUDIO | 初始化音效子系統，會順便初始化事件子系統 |
+| SDL_INIT_VIDEO | 初始化影片子系統，會順便初始化事件子系統 |
+| SDL_INIT_JOYSTICK | 初始化搖桿子系統，會順便初始化事件子系統 |
+| SDL_INIT_HAPTIC | haptic (force feedback) subsystem |
+| SDL_INIT_GAMECONTROLLER | controller subsystem; automatically initializes the joystick subsystem |
+| SDL_INIT_EVENTS | 初始化事件子系統 |
+| SDL_INIT_EVERYTHING | 初始化所有子系統 |
