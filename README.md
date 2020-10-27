@@ -12,4 +12,11 @@ S系列：SDL教學
 G系列：遊戲開發  
 D系列：Design Parttern  
 
-![GitHub](https://github.com/haha4ni/tututu/blob/main/05.PNG?raw=true)
+| SDL | Game |
+| :---: | :---: |
+| 環境架設 1 |  |
+| 建立視窗 1 |  |
+| 事件處理 3 |  |
+| 鍵盤輸入 4 |  |
+| 表面與紋理 2 5 7 |  |
+| 圖片載入(擴充函式庫) 6 |  |
