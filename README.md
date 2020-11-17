@@ -10,7 +10,7 @@
 教學會分三個部分平行進行，分別為Design Parttern、SDL個別教學以及遊戲開發教學。搭配遊戲開發進度來給予SDL教學以及少量的Design Parttern。  
 
 | SDL | Game | DP |
-| :---: | :---: |
+| :---: | :---: |  :---: |
 | [環境架設](https://github.com/haha4ni/tututu/blob/main/000%20-%20%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99.md])|  |
 | [建立視窗](https://github.com/haha4ni/tututu/blob/main/001%20-%20%E5%BB%BA%E7%AB%8B%E8%A6%96%E7%AA%97.md) | 引擎主核心 | 單例模式 |
 | [事件處理](https://github.com/haha4ni/tututu/blob/main/002%20-%20%E8%99%95%E7%90%86%E4%BA%8B%E4%BB%B6.md) |  |
