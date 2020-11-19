@@ -9,7 +9,7 @@
 # 導覽
 | SDL | Game | Design Parttern |
 | :---: | :---: |  :---: |
-| [環境架設](https://github.com/haha4ni/tututu/blob/main/000%20-%20%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99.md])|  |
+| [環境架設](https://github.com/haha4ni/tututu/blob/main/000%20-%20%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99.md)|  |
 | [建立視窗](https://github.com/haha4ni/tututu/blob/main/001%20-%20%E5%BB%BA%E7%AB%8B%E8%A6%96%E7%AA%97.md) | 引擎主核心 | 單例模式 |
 | [事件處理](https://github.com/haha4ni/tututu/blob/main/002%20-%20%E8%99%95%E7%90%86%E4%BA%8B%E4%BB%B6.md) |  |
 | 鍵盤輸入 4 |  |
